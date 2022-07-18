@@ -88,6 +88,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		<p>3.2. Count of active and verified users who have attached active products.</p>
 		<code><b>Active And Verified User Attached Product Count: </b><?=$acitve_user_products_count;?></code>
+
+		<p>3.3. Count of all active products (just from products table).</p>
+		<code><b>Active Products Count: </b><?=$acitve_products_count;?></code>
 	</div>
 </div>
 
