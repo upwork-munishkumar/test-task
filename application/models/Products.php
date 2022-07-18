@@ -55,4 +55,20 @@ class Products extends CI_Model{
 		return $this->db->get()->result_array();
 	}
 
+	/**
+    *   GET SUM OF ACTIVE AND ATTACHED PRODUCTS PRICE BY USER
+    */
+	public function acitve_and_attached_products_price_sum_by_user()
+	{
+		$this->db->select("users.id, users.name, SUM(user_products.quantity * user_products.product_price) as current_user_active_attached_products_price_sum"); 
+		$this->db->from('user_products');
+		$this->db->join('users','users.id = user_products.user_id','left');
+		$this->db->join('products','products.id = user_products.product_id','left');		
+		$this->db->where('users.status', 1);
+		$this->db->where('users.verified', 1);
+		$this->db->where('products.status', 1);
+		$this->db->group_by('user_products.user_id');
+		return $this->db->get()->result_array();
+	}
+
 }
