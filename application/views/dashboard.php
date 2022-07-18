@@ -97,6 +97,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		<p>3.5. Amount of all active attached products (if user1 has 3 prod1 and 2 prod2 which are active, user2 has 7 prod2 and 4 prod3, prod3 is inactive, then the amount of active attached products will be 3 + 2 + 7 = 12).</p>
 		<code><b>Active and Attached Products Qunatity: </b><?=$acitve_and_attached_products_quantity;?></code>
+
+		<p>3.6. Summarized price of all active attached products (from the previous subpoint if prod1 price is 100$, prod2 price is 120$, prod3 price is 200$, the summarized price will be 3 x 100 + 9 x 120 = 1380).</p>
+		<code><b>Active and Attached Products Price Sum: </b><?=$acitve_and_attached_products_price_sum;?></code>
 	</div>
 </div>
 
