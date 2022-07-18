@@ -16,7 +16,7 @@ class Dashboard extends CI_Controller {
  	}
 
  	/*
-		To display count of active and verified user on Dashboard Page. 
+		Display stats of USERS and PRODUCTS and Their PRICES. 
  	*/
 	public function index()
 	{
@@ -26,6 +26,7 @@ class Dashboard extends CI_Controller {
 		$acitve_products_but_not_attached_count 		= $this->Products->acitve_products_but_not_attached_count();
 		$acitve_and_attached_products_quantity 			= $this->Products->acitve_and_attached_products_quantity();
 		$acitve_and_attached_products_price_sum 		= $this->Products->acitve_and_attached_products_price_sum();
+		$acitve_and_attached_products_price_sum_by_user = $this->Products->acitve_and_attached_products_price_sum_by_user();
 		$data['page_title'] 							= 'Dashboard';
 		$data['acitve_user_count'] 						= $acitve_user_count;
 		$data['acitve_user_products_count'] 			= $acitve_user_products_count;
@@ -33,7 +34,7 @@ class Dashboard extends CI_Controller {
 		$data['acitve_products_but_not_attached_count']	= $acitve_products_but_not_attached_count;
 		$data['acitve_and_attached_products_quantity']  = (isset($acitve_and_attached_products_quantity[0]) && isset($acitve_and_attached_products_quantity[0]['active_attached_products_quantity']))?$acitve_and_attached_products_quantity[0]['active_attached_products_quantity']:0; 
 		$data['acitve_and_attached_products_price_sum']  = (isset($acitve_and_attached_products_price_sum[0]) && isset($acitve_and_attached_products_price_sum[0]['active_attached_products_price_sum']))?$acitve_and_attached_products_price_sum[0]['active_attached_products_price_sum']:0; 
-		
+		$data['acitve_and_attached_products_price_sum_by_user']	= $acitve_and_attached_products_price_sum_by_user;
 		$this->load->view('dashboard', $data);
 	}
 }

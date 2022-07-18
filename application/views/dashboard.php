@@ -74,6 +74,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		border: 1px solid #D0D0D0;
 		box-shadow: 0 0 8px #D0D0D0;
 	}
+	table, th, td {
+		border: 1px solid black;
+	}
 	</style>
 </head>
 <body>
@@ -100,6 +103,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		<p>3.6. Summarized price of all active attached products (from the previous subpoint if prod1 price is 100$, prod2 price is 120$, prod3 price is 200$, the summarized price will be 3 x 100 + 9 x 120 = 1380).</p>
 		<code><b>Active and Attached Products Price Sum: </b>$<?=$acitve_and_attached_products_price_sum;?></code>
+
+		<p>3.7. Summarized prices of all active products per user. For example - John Summer - 85$, Lennon Green - 107$.</p>
+		<code>
+			<b>Active and Attached Products Price Sum By User: </b>
+			<table>
+				<thead>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Total Products Price</th>
+				</thead>
+				<?php
+					if ($acitve_and_attached_products_price_sum_by_user) {
+						echo "<tbody>";
+						foreach ($acitve_and_attached_products_price_sum_by_user as $userData) {
+							echo "<tr><td>".$userData['id']."</td>";
+							echo "<td>".$userData['name']."</td>";
+							echo "<td> $".$userData['current_user_active_attached_products_price_sum']."</td></tr>";
+						}
+						echo "</tbody>";
+					}
+				?>
+			</table>
+		</code>
 	</div>
 </div>
 
