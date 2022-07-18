@@ -12,4 +12,20 @@ class Users extends CI_Model{
 		$this->db->where(['status' => 1, 'verified' => 1]);
 		return $this->db->get()->num_rows();
 	}
+
+	/**
+    *   GET ACTIVE AND VERIFIED USERS ATTACHED PRODUCT COUNT
+    */
+    
+	public function active_users_attached_products()
+	{
+		$this->db->select("user-products.*,users.*"); 
+		$this->db->from('user-products');
+		$this->db->join('users','users.id = user-products.user_id','left');
+		$this->db->where('users.status', 1);
+		$this->db->where('users.verified', 1);
+		$this->db->group_by('user-products.user_id');
+		return $this->db->get()->num_rows();
+	}
+
 }

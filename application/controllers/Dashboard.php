@@ -19,9 +19,11 @@ class Dashboard extends CI_Controller {
  	*/
 	public function index()
 	{
-		$acitve_user_count 			= $this->Users->active_and_verified_users();
-		$data['page_title'] 		= 'Dashboard';
-		$data['acitve_user_count'] 	= $acitve_user_count;
+		$acitve_user_count 						= $this->Users->active_and_verified_users();
+		$acitve_user_products_count 			= $this->Users->active_users_attached_products();
+		$data['page_title'] 					= 'Dashboard';
+		$data['acitve_user_count'] 				= $acitve_user_count;
+		$data['acitve_user_products_count'] 	= $acitve_user_products_count;
 		$this->load->view('dashboard', $data);
 	}
 }

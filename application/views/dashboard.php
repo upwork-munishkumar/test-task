@@ -84,7 +84,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<div id="body">
 		<p>3.1. Count of all active and verified users.</p>
-		<code><b>Active And Verified User Count: </b><?=$acitve_user_count?></code>
+		<code><b>Active And Verified User Count: </b><?=$acitve_user_count;?></code>
+
+		<p>3.2. Count of active and verified users who have attached active products.</p>
+		<code><b>Active And Verified User Attached Product Count: </b><?=$acitve_user_products_count;?></code>
 	</div>
 </div>
 
