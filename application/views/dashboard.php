@@ -94,6 +94,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		<p>3.4. Count of active products which don't belong to any user.</p>
 		<code><b>Products Count which are active but not attached to any user: </b><?=$acitve_products_but_not_attached_count;?></code>
+
+		<p>3.5. Amount of all active attached products (if user1 has 3 prod1 and 2 prod2 which are active, user2 has 7 prod2 and 4 prod3, prod3 is inactive, then the amount of active attached products will be 3 + 2 + 7 = 12).</p>
+		<code><b>Active and Attached Products Qunatity: </b><?=$acitve_and_attached_products_quantity;?></code>
 	</div>
 </div>
 
