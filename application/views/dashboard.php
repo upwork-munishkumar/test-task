@@ -99,7 +99,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<code><b>Active and Attached Products Qunatity: </b><?=$acitve_and_attached_products_quantity;?></code>
 
 		<p>3.6. Summarized price of all active attached products (from the previous subpoint if prod1 price is 100$, prod2 price is 120$, prod3 price is 200$, the summarized price will be 3 x 100 + 9 x 120 = 1380).</p>
-		<code><b>Active and Attached Products Price Sum: </b><?=$acitve_and_attached_products_price_sum;?></code>
+		<code><b>Active and Attached Products Price Sum: </b>$<?=$acitve_and_attached_products_price_sum;?></code>
 	</div>
 </div>
 
