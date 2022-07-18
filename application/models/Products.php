@@ -25,6 +25,9 @@ class Products extends CI_Model{
 		return $this->db->get()->num_rows();	
 	}
 
+	/**
+    *   GET SUM OF ACTIVE AND ATTACHED PRODUCTS QUANTITY
+    */
 	public function acitve_and_attached_products_quantity()
 	{
 		$this->db->select("SUM(user_products.quantity) as active_attached_products_quantity"); 
