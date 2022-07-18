@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
+	<title><?php echo $page_title;?></title>
 
 	<style type="text/css">
 
@@ -91,6 +91,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		<p>3.3. Count of all active products (just from products table).</p>
 		<code><b>Active Products Count: </b><?=$acitve_products_count;?></code>
+
+		<p>3.4. Count of active products which don't belong to any user.</p>
+		<code><b>Products Count which are active but not attached to any user: </b><?=$acitve_products_but_not_attached_count;?></code>
 	</div>
 </div>
 

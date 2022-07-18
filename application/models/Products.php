@@ -13,4 +13,16 @@ class Products extends CI_Model{
 		return $this->db->get()->num_rows();
 	}
 
+	/**
+    *   GET PRODUCTS COUNT WHICH ARE ACTIVE BUT NOT ATTACHED TO ANY USER
+    */
+	public function acitve_products_but_not_attached_count()
+	{
+		$this->db->select("*"); 
+		$this->db->from('products');
+		$this->db->where('status', 1);
+		$this->db->where('products.id NOT IN (select product_id from `user-products`)',NULL,FALSE);
+		return $this->db->get()->num_rows();	
+	}
+
 }
