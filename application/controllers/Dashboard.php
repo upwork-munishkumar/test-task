@@ -37,4 +37,45 @@ class Dashboard extends CI_Controller {
 		$data['acitve_and_attached_products_price_sum_by_user']	= $acitve_and_attached_products_price_sum_by_user;
 		$this->load->view('dashboard', $data);
 	}
+
+
+	/*
+		CONVERT CURRENCY FROM EURO TO USD AND RON 
+ 	*/
+	public function change_currency()
+	{
+		$method_response = array();
+		$method_response['status'] = 'error';
+
+		$selected_currency 	= $this->input->post('selected_currency');
+		$current_price 		= $this->input->post('current_price');
+
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://api.apilayer.com/exchangerates_data/convert?to=".$selected_currency."&from=EUR&amount=".$current_price,
+		  CURLOPT_HTTPHEADER => array(
+		    "Content-Type: text/plain",
+		    "apikey: 9tE9u7JwTByTd7v3YhJJKwIqBc1FhbDG"
+		  ),
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 0,
+		  CURLOPT_FOLLOWLOCATION => true,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET"
+		));
+
+		$response = curl_exec($curl);
+		curl_close($curl);
+		
+		$currency_converter_res = json_decode($response, true);
+
+		if (isset($currency_converter_res['success']) && $currency_converter_res['success'] == 1) {
+			$method_response['status'] = 'success';
+			$method_response['converted_price'] = $currency_converter_res['result'];
+		}
+		die(json_encode($method_response));
+	}
 }
