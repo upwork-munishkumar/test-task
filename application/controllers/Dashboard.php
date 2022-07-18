@@ -25,12 +25,15 @@ class Dashboard extends CI_Controller {
 		$acitve_products_count 							= $this->Products->active_products_count();
 		$acitve_products_but_not_attached_count 		= $this->Products->acitve_products_but_not_attached_count();
 		$acitve_and_attached_products_quantity 			= $this->Products->acitve_and_attached_products_quantity();
+		$acitve_and_attached_products_price_sum 		= $this->Products->acitve_and_attached_products_price_sum();
 		$data['page_title'] 							= 'Dashboard';
 		$data['acitve_user_count'] 						= $acitve_user_count;
 		$data['acitve_user_products_count'] 			= $acitve_user_products_count;
 		$data['acitve_products_count'] 					= $acitve_products_count;
 		$data['acitve_products_but_not_attached_count']	= $acitve_products_but_not_attached_count;
 		$data['acitve_and_attached_products_quantity']  = (isset($acitve_and_attached_products_quantity[0]) && isset($acitve_and_attached_products_quantity[0]['active_attached_products_quantity']))?$acitve_and_attached_products_quantity[0]['active_attached_products_quantity']:0; 
+		$data['acitve_and_attached_products_price_sum']  = (isset($acitve_and_attached_products_price_sum[0]) && isset($acitve_and_attached_products_price_sum[0]['active_attached_products_price_sum']))?$acitve_and_attached_products_price_sum[0]['active_attached_products_price_sum']:0; 
+		
 		$this->load->view('dashboard', $data);
 	}
 }
