@@ -43,7 +43,9 @@ class Products extends CI_Controller {
 	public function add()
 	{
 		$data['page_title'] = 'Add Product';
-        //Form Validation
+		$userRole 			= $this->session->userdata('role');
+		$data['userRole']	= $userRole;
+		//Form Validation
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('description', 'Description', 'required');
         $this->form_validation->set_rules('quantity', 'Quantity', 'required|numeric');
@@ -56,11 +58,12 @@ class Products extends CI_Controller {
             $uplaodData = $this->upload_image($_FILES['image']);
             //Getting Post Values
             $insertData['title'] 		= $this->input->post('title');
+            $insertData['status']		= ($this->input->post('status') == 'active')?1:0;
             $insertData['image'] 		= $uplaodData['file_name'];
             $insertData['description'] 	= $this->input->post('description');
             $insertData['status'] 		= 1;
             $insertedProduct 			= $this->Products_Model->insertProduct($insertData);
-            if ($insertedProduct) {
+            if ($insertedProduct && $userRole == 2) {
 	            $assignProduct['quantity'] 		= $this->input->post('quantity');
 	            $assignProduct['product_price']	= $this->input->post('price');
 	            $assignProduct['user_id'] 		= $this->session->userdata('uid');
@@ -73,7 +76,10 @@ class Products extends CI_Controller {
 					$this->session->set_flashdata('error','Something went wrong. Please try again.');	
 					redirect('add-product');	
 				}
-            }else {
+            }elseif ($insertedProduct && $userRole == 1) {
+            	$this->session->set_flashdata('success','Product has been added succesfully!');
+				redirect('products');
+            } else {
 				$this->session->set_flashdata('error','Something went wrong. Please try again.');	
 				redirect('add-product');	
 			}
@@ -90,7 +96,7 @@ class Products extends CI_Controller {
 		$userRole 			= $this->session->userdata('role');
 		$data['userRole']	= $userRole;
 		$data['page_title'] = 'Edit Product';
-		$product_details 	= $this->Users->active_users_attached_productsDetails($useruid, $id);
+		$product_details 	= $this->Users->products_list_for_attach();
 		if ($product_details) {
 			$data['product_details'] = $product_details;
 			$this->form_validation->set_rules('title', 'Title', 'required');
@@ -99,6 +105,7 @@ class Products extends CI_Controller {
 	        $this->form_validation->set_rules('price', 'Price', 'required|numeric');
 	        if ($this->form_validation->run()) {
 	        	$updateData['title'] 		= $this->input->post('title');
+	        	$updateData['status']		= ($this->input->post('status') == 'active')?1:0;
 	        	if (empty($_FILES['image']['name'])){
 			    	$updateData['image'] 	= $this->input->post('old_image');
 				}else{

@@ -184,8 +184,7 @@
 			<?php echo form_input(['name'=>'user_product_id','class'=>'form-control','value'=>$product_details[0]->user_product_id,'type'=>'hidden']);?>
 			<div class="form-group">
 				<?php 
-
-                	$data = array(
+					$data = array(
 				        'name'        => 'description',
 				        'id'          => 'description',
 				        'value'       => $product_details[0]->description,
@@ -201,6 +200,33 @@
                 ?>
                 <?php echo form_error('description',"<div style='color:red'>","</div>");?>  	
             </div>
+            <?php
+            	if ($userRole == 1) {
+            ?>	
+            		<div class="form-group">
+            			<div class="checkbox">
+            				<?php
+            					$radioData = array(
+            						'name'  => 'status',
+            						'type'	=> 'radio'
+            					);
+            					if ($product_details[0]->status == 1) {
+        							echo form_input(array_merge($radioData, ['value'=>'active', 'checked' => 'checked']));	
+	        						echo '<label for="Status"> Active</label>';
+	        						echo form_input(array_merge($radioData, ['value'=>'inactive']));	
+	        						echo '<label for="Status"> Inactive</label>';
+            					}else{
+            						echo form_input(array_merge($radioData, ['value'=>'active']));	
+	        						echo '<label for="Status"> Active</label>';
+	        						echo form_input(array_merge($radioData, ['value'=>'inactive', 'checked' => 'checked']));	
+	        						echo '<label for="Status"> Inactive</label>';
+            					}
+            				?>
+            			</div>
+            		</div>
+            <?php
+            	}
+            ?>
             <div class="form-group">
                 <?php echo form_submit(['name'=>'Add','value'=>'Submit','class'=>'btn btn-success btn-lg btn-block']);?>
             </div>
