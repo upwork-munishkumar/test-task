@@ -124,6 +124,18 @@
     </head>
     <body>
         <div class="signup-form">
+            <?php
+                if($userRole == 1){
+            ?>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>Admin</p>
+                            <b>As admin you have all the capabilities</b>
+                        </div>
+                    </div>
+            <?php
+                }
+            ?>
             <h2>Welcome: <b> <?php echo $name;?></b></h2>
             <form>
                 <div id="body">
