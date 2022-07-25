@@ -87,6 +87,8 @@ class Products extends CI_Controller {
 	public function edit($id='')
 	{
 		$useruid 			= $this->session->userdata('uid');
+		$userRole 			= $this->session->userdata('role');
+		$data['userRole']	= $userRole;
 		$data['page_title'] = 'Edit Product';
 		$product_details 	= $this->Users->active_users_attached_productsDetails($useruid, $id);
 		if ($product_details) {
@@ -183,6 +185,69 @@ class Products extends CI_Controller {
         }else {
         	return $this->upload->data();
         }
+	}
+
+	/*
+		* This method is for listing all products for not admin users
+	*/
+	public function add_from_all_products()
+	{
+		$userfname 			= $this->session->userdata('name');
+		$useruid 			= $this->session->userdata('uid');
+		$userRole 			= $this->session->userdata('role');
+		$userEmail 			= $this->session->userdata('email');
+		$data['name']		= $userfname;
+		$data['userRole']	= $userRole;
+		$data['userEmail']	= $userEmail;
+		$data['page_title']	= 'Products List';
+		$data['list'] 		= $this->Users->products_list_for_attach();
+		$this->load->view('products_list',$data);
+	}
+
+	/*
+		* Attach the products from list to user
+	*/
+	public function attach($product_id='')
+	{
+		$data['page_title'] = 'Edit Product';
+		$product_details 	= $this->Users->get_special_edit_for_attach($product_id);
+		if ($product_details) {
+			$data['product_details'] = $product_details;
+			$this->form_validation->set_rules('quantity', 'Quantity', 'required|numeric');
+	        $this->form_validation->set_rules('price', 'Price', 'required|numeric');
+	        if ($this->form_validation->run()) {
+	        	$updateData['title'] 		= $this->input->post('title');
+	        	if (empty($_FILES['image']['name'])){
+			    	$updateData['image'] 	= $this->input->post('old_image');
+				}else{
+					$uplaodData = $this->upload_image($_FILES['image']);
+					$updateData['image']	= $uplaodData['file_name'];
+				}
+	            $updateData['description'] 	= $this->input->post('description');
+	            $updatedProduct 			= $this->Products_Model->updateProduct($updateData, $id);
+	        	if ($updatedProduct) {
+	        		$assignProduct['quantity'] 		= $this->input->post('quantity');
+		            $assignProduct['product_price']	= $this->input->post('price');
+		            $assignProduct['user_id'] 		= $this->session->userdata('uid');
+		            $assignProduct['product_id'] 	= $this->input->post('product_id');
+		            $assignedProduct 				= $this->Products_Model->assignProduct($assignProduct);
+	            	if($assignedProduct){
+		            	$this->session->set_flashdata('success','Product has been added to list!');
+						redirect('products');
+					}else {
+						$this->session->set_flashdata('error','Something went wrong. Please try again.');	
+						redirect('edit-product/'.$id);	
+					}
+	        	}else {
+					$this->session->set_flashdata('error','Something went wrong. Please try again.');	
+					redirect('edit-product/'.$id);	
+				}
+	        }
+		}else{
+			$this->session->set_flashdata('error','Either product is not available or not active!');
+			redirect('products');
+		}
+		$this->load->view('attach_products', $data);
 	}
 
 }

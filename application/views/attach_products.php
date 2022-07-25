@@ -124,9 +124,9 @@
     </head>
     <body>
         <div class="signup-form">
-            <h2>Register</h2>
+            <h2>Attach</h2>
             <p class="hint-text">Add your product</p>
-            <?php echo form_open_multipart('edit-product/'.$product_details[0]->id,['name'=>'add-product','autocomplete'=>'off']);?>
+            <?php echo form_open('attach-product/'.$product_details[0]->id,['name'=>'attach-product','autocomplete'=>'off']);?>
             <div class="form-group">
                 <!--success message -->
                 <?php if($this->session->flashdata('success')){?>
@@ -142,66 +142,36 @@
                 <?php } ?>
                 <div class="row">
                     <div class="col">
-                        <?php 
-	                        if ($userRole == 1) {
-			            		echo form_input(['name'=>'title','class'=>'form-control','value'=>$product_details[0]->title,'placeholder'=>'Product Name']);
-			            	}else{
-			            		echo form_input(['name'=>'title','class'=>'form-control','value'=>$product_details[0]->title,'placeholder'=>'Product Name', 'readOnly'=>'readOnly']);
-			            	}
-						?>
-                        <?php echo form_error('title',"<div style='color:red'>","</div>");?>
+                    	<b>Product Name</b>
+                    	<p><?=$product_details[0]->title;?></p>
                     </div>
-                    <div class="col">
-                    	<?php echo form_input(['name'=>'quantity','class'=>'form-control','value'=>$product_details[0]->quantity,'placeholder'=>'Enter product qunatity', 'type'=>'number']);?>
-                        <?php echo form_error('quantity',"<div style='color:red'>","</div>");?>	 
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-    			<?php echo form_input(['name'=>'price','class'=>'form-control','value'=>$product_details[0]->product_price,'placeholder'=>'Enter product price per quantity', 'type'=>'number']);?>
-				<?php echo form_error('price',"<div style='color:red'>","</div>");?>
-            </div>
-            <div class="form-group">
-    			<div class="row">
-	                <div class="col-lg-12 col-md-12 col-sm-6">
+                    <div class="col-lg-12 col-md-12 col-sm-6">
 	                	<?php
 	                		$product_image = base_url('assets/images/products/').$product_details[0]->image;
 	                	?>
+	                	<b>Product Image</b>
 	                    <div class="white-box text-center"><img width="150px" src="<?=$product_image;?>" class="img-responsive"></div>
 	                </div>
+	                <div class="col">
+	                	<b>Product Details</b>
+	                	<p><?=$product_details[0]->description;?></p>
+	                </div>
+                </div>
+            </div>
+            <div class="form-group">
+    			<div class="row">
+	            	<div class="col">
+                    	<?php echo form_input(['name'=>'quantity','class'=>'form-control','value'=>set_value('qunatity'),'placeholder'=>'Enter product qunatity', 'type'=>'number']);?>
+                        <?php echo form_error('quantity',"<div style='color:red'>","</div>");?>	 
+                    </div>    
 	            </div>
-	            <code>Leave below image field as blank, if you want to keep same!</code>
-    		</div>
+	        </div>
             <div class="form-group">
-    			<?php 
-    				if ($userRole == 1) {
-    					echo form_input(['name'=>'image','class'=>'form-control','value'=>set_value('image'),'type'=>'file']);
-    				}
-    			?>
-    			<?php echo form_input(['name'=>'old_image','class'=>'form-control','value'=>$product_details[0]->image,'type'=>'hidden']);?>
-            	<?php echo form_error('image',"<div style='color:red'>","</div>");?>
+    			<?php echo form_input(['name'=>'price','class'=>'form-control','value'=>set_value('price'),'placeholder'=>'Enter product price per quantity', 'type'=>'number']);?>
+				<?php echo form_error('price',"<div style='color:red'>","</div>");?>
             </div>
-			<?php echo form_input(['name'=>'user_product_id','class'=>'form-control','value'=>$product_details[0]->user_product_id,'type'=>'hidden']);?>
+            <?php echo form_input(['name'=>'product_id','class'=>'form-control','value'=>$product_details[0]->id,'type'=>'hidden']);?>
 			<div class="form-group">
-				<?php 
-
-                	$data = array(
-				        'name'        => 'description',
-				        'id'          => 'description',
-				        'value'       => $product_details[0]->description,
-				        'rows'        => '5',
-				        'cols'        => '10',
-				        'style'       => 'width:100%',
-				        'class'       => 'form-control'
-				    );
-				    if ($userRole == 2) {
-						$data['readOnly'] = 'readOnly';
-					}
-				    echo form_textarea($data);
-                ?>
-                <?php echo form_error('description',"<div style='color:red'>","</div>");?>  	
-            </div>
-            <div class="form-group">
                 <?php echo form_submit(['name'=>'Add','value'=>'Submit','class'=>'btn btn-success btn-lg btn-block']);?>
             </div>
             </form>

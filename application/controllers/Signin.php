@@ -35,7 +35,8 @@ class Signin extends CI_Controller{
 				}
 				$this->session->set_userdata('uid',$validate->id);	
 				$this->session->set_userdata('name',$validate->name);
-				$this->session->set_userdata('role',$validate->role);	
+				$this->session->set_userdata('role',$validate->role);
+				$this->session->set_userdata('email',$validate->email);	
 				redirect('welcome');
 			} else {
 				$this->session->set_flashdata('error','Invalid login details.Please try again.');
