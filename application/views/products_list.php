@@ -148,46 +148,27 @@
                     <?php  echo $this->session->flashdata('error');?>
                 </div>
             <?php } ?>
-            <h2>Products</h2>
+            <h2>Products List</h2>
             <table id="example" class="display" style="width:100%">
 		        <thead>
 		            <tr>
 		                <th>#</th>
 		                <th>Title</th>
 		                <th>Image</th>
-                        <?php if($userRole == 1){?>
-                            <th>User Attached</th>
-                            <th>User Attached Email</th>
-                        <?php } ?>
-                        <th>Quantity</th>
-		                <th>Per Price</th>
-		                <th>Action</th>
-                        <?php if($userRole == 1){?>
-                            <th>Status</th>
-                        <?php } ?>
-		            </tr>
+                        <th>Action</th>
+                    </tr>
 		        </thead>
 		        <tbody>
 		        	<?php
 		        		if ($list) {
 		        			foreach ($list as $count => $product) {
-		        				$productQuantity = ($product->quantity)?$product->quantity:0;
-                                $productStatus   = ($product->status == 0)?'In active':'Active';
+                                if($product->status == 0 || $product->attached_user_email == $userEmail){
+                                    continue;
+                                }
                                 echo "<tr><td>".($count+1)."</td>";
 		        				echo "<td>".$product->title."</td>";
 		        				echo "<td> <img width='150px' src='".base_url('assets/images/products/').$product->image."' class='img-responsive' alt='".$product->image."'></td>";
-                                if($userRole == 1){
-                                    $attached_userName = (!empty($product->attached_user_email))?$product->attached_user_name:'No user attached';
-                                    $attached_userEmail = (!empty($product->attached_user_email))?$product->attached_user_email:'No user attached';
-    		        				echo "<td>".$attached_userName."</td>";
-                                    echo "<td>".$attached_userEmail."</td>";
-                                }
-                                echo "<td>".$productQuantity."</td>";
-		        				echo "<td>".$product->product_price."</td>";
-		        				echo "<td><a href='".base_url('view-product/').$product->id."' title='View Product'><i class='fa fa-eye'></i></a> <a href='".base_url('edit-product/').$product->id."'  title='Edit Product'><i class='fa fa-pencil'></i></a> <a href='".base_url('delete-product/').$product->id."' title='Delete Product'><i class='fa fa-trash'></i></a></td>";
-                                if($userRole == 1){
-                                    echo "<td>".$productStatus."</td></tr>";
-                                }
+                                echo "<td><a href='".base_url('attach-product/').$product->id."'  title='Add to list'><i class='fa fa-list'></i></a> </td></tr>";
                             }
 		        		}
 		        	?>
@@ -197,35 +178,11 @@
 		                <th>#</th>
 		                <th>Title</th>
 		                <th>Image</th>
-                        <?php if($userRole == 1){?>
-                            <th>User Attached</th>
-                            <th>User Attached Email</th>
-                        <?php } ?>
-                        <th>Quantity</th>
-		                <th>Per Price</th>
-		                <th>Action</th>
-                        <?php if($userRole == 1){?>
-                            <th>Status</th>
-                        <?php } ?>
+                        <th>Action</th>
 		            </tr>
 		        </tfoot>
 		    </table><br>
-		    <form>
-                <div class="form-group">
-                    <?php
-                        if($userRole == 1){
-                    ?>
-                            <a href="<?php echo base_url('add-product');?>" class="btn btn-success btn-lg btn-block" style="color:#fff;">Add Product</a>
-                    <?php
-                        } else {
-                    ?>
-                            <a href="<?php echo base_url('add-product-from-list');?>" class="btn btn-success btn-lg btn-block" style="color:#fff;">Add Product From List</a>
-                    <?php
-                        }
-                    ?>
-                </div>
-            </form>
-        </div>
+		</div>
         <script>
         	$(document).ready(function () {
 			    $('#example').DataTable();
