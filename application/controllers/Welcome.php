@@ -31,7 +31,9 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		$userfname 										= $this->session->userdata('name');
+		$userRole 										= $this->session->userdata('role');
 		$data['name']									= $userfname;
+		$data['userRole']								= $userRole;
 		$acitve_user_count 								= $this->Users->active_and_verified_users();
 		$acitve_user_products_count 					= $this->Users->active_users_attached_products();
 		$acitve_products_count 							= $this->Products_Model->active_products_count();

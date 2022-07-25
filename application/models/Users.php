@@ -61,4 +61,15 @@ class Users extends CI_Model{
 		return $this->db->get()->result();	
 	}
 
+	/*
+		* Product list for admin
+	*/
+	public function products_list_for_admin(){
+		$this->db->select("products.*, user_products.product_price, user_products.quantity, user_products.id as user_product_id, users.name as attached_user_name, users.email as attached_user_email"); 
+		$this->db->from('products');
+		$this->db->join('user_products','user_products.product_id = products.id','left');
+		$this->db->join('users','users.id = user_products.user_id','left');
+		return $this->db->get()->result();
+	}
+
 }

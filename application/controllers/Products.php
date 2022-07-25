@@ -25,9 +25,15 @@ class Products extends CI_Controller {
 	{
 		$userfname 			= $this->session->userdata('name');
 		$useruid 			= $this->session->userdata('uid');
+		$userRole 			= $this->session->userdata('role');
 		$data['name']		= $userfname;
+		$data['userRole']	= $userRole;
 		$data['page_title']	= 'Products';
-		$data['list'] 		= $this->Users->active_users_attached_products_list($useruid);
+		if ($userRole == 2) {
+			$data['list'] 		= $this->Users->active_users_attached_products_list($useruid);
+		}else{
+			$data['list'] 		= $this->Users->products_list_for_admin();
+		}
 		$this->load->view('products',$data);
 	}
 
