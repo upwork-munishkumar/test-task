@@ -61,7 +61,6 @@ class Products extends CI_Controller {
             $insertData['status']		= ($this->input->post('status') == 'active')?1:0;
             $insertData['image'] 		= $uplaodData['file_name'];
             $insertData['description'] 	= $this->input->post('description');
-            $insertData['status'] 		= 1;
             $insertedProduct 			= $this->Products_Model->insertProduct($insertData);
             if ($insertedProduct && $userRole == 2) {
 	            $assignProduct['quantity'] 		= $this->input->post('quantity');

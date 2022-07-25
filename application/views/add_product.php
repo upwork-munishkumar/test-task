@@ -180,8 +180,14 @@
             		<div class="form-group">
             			<div class="checkbox">
             				<?php
-								echo form_input(['name'=>'status','type'=>'radio', 'value' => 'active']);	
-            					echo '<label for="Status"> Status</label><br><b>Mark as check for active</b>';
+								$radioData = array(
+            						'name'  => 'status',
+            						'type'	=> 'radio'
+            					);
+        						echo form_input(array_merge($radioData, ['value'=>'active']));	
+        						echo '<label for="Status"> Active</label>';
+        						echo form_input(array_merge($radioData, ['value'=>'inactive']));	
+        						echo '<label for="Status"> Inactive</label>';
             				?>
             			</div>
             		</div>
