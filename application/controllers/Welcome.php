@@ -23,7 +23,7 @@ class Welcome extends CI_Controller {
 		parent::__construct();
 		$this->load->library('session');
 		$this->load->model('Users');
-        $this->load->model('Products');
+        $this->load->model('Products_Model');
 		if(!$this->session->userdata('uid'))
 			redirect('signin');
 	}
@@ -34,11 +34,11 @@ class Welcome extends CI_Controller {
 		$data['name']									= $userfname;
 		$acitve_user_count 								= $this->Users->active_and_verified_users();
 		$acitve_user_products_count 					= $this->Users->active_users_attached_products();
-		$acitve_products_count 							= $this->Products->active_products_count();
-		$acitve_products_but_not_attached_count 		= $this->Products->acitve_products_but_not_attached_count();
-		$acitve_and_attached_products_quantity 			= $this->Products->acitve_and_attached_products_quantity();
-		$acitve_and_attached_products_price_sum 		= $this->Products->acitve_and_attached_products_price_sum();
-		$acitve_and_attached_products_price_sum_by_user = $this->Products->acitve_and_attached_products_price_sum_by_user();
+		$acitve_products_count 							= $this->Products_Model->active_products_count();
+		$acitve_products_but_not_attached_count 		= $this->Products_Model->acitve_products_but_not_attached_count();
+		$acitve_and_attached_products_quantity 			= $this->Products_Model->acitve_and_attached_products_quantity();
+		$acitve_and_attached_products_price_sum 		= $this->Products_Model->acitve_and_attached_products_price_sum();
+		$acitve_and_attached_products_price_sum_by_user = $this->Products_Model->acitve_and_attached_products_price_sum_by_user();
 		$data['page_title'] 							= 'Welcome';
 		$data['acitve_user_count'] 						= $acitve_user_count;
 		$data['acitve_user_products_count'] 			= $acitve_user_products_count;

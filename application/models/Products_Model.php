@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Products extends CI_Model{
+class Products_Model extends CI_Model{
 
     /**
     *   GET ACTIVE PRODUCTS COUNT
@@ -71,4 +71,48 @@ class Products extends CI_Model{
 		return $this->db->get()->result_array();
 	}
 
+	/*
+		* Inserting new product
+	*/
+	public function insertProduct($data=array())
+	{
+		$this->db->insert('products',$data);
+		return $this->db->insert_id();
+	}
+
+	/*
+		* Updating the product
+	*/
+	public function updateProduct($data=array(), $id='')
+	{
+		$this->db->where('id', $id);
+		return $this->db->update('products', $data);
+	}
+
+	/*
+		* Attaching the product in user list
+	*/
+	public function assignProduct($data=array())
+	{
+		return $this->db->insert('user_products',$data);
+	}
+
+	/*
+		* Update the attached product from user list
+	*/
+	public function update_assignedProduct($data=array(), $user_product_id='')
+	{
+		$this->db->where('id', $user_product_id);
+		return $this->db->update('user_products', $data);
+	}
+
+	/*
+		* Deleting the product from user list
+	*/
+	public function deleteProduct($id='', $user_id='')
+	{
+		$this->db->where('product_id', $id);
+		$this->db->where('user_id', $user_id);
+		return $this->db->delete('user_products');
+	}
 }

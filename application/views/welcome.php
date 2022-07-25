@@ -202,6 +202,9 @@
             </form>
             <form>
                 <div class="form-group">
+                    <a href="<?php echo site_url('products');?>" class="btn btn-success btn-lg btn-block" style="color:#fff;">Products</a>
+                </div>
+                <div class="form-group">
                     <a href="<?php echo site_url('Logout');?>" class="btn btn-success btn-lg btn-block" style="color:#fff;">Logout</a>
                 </div>
             </form>
