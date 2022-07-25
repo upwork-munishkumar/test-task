@@ -174,6 +174,26 @@
                 ?>
                 <?php echo form_error('description',"<div style='color:red'>","</div>");?>  	
             </div>
+            <?php
+            	if ($userRole == 1) {
+            ?>	
+            		<div class="form-group">
+            			<div class="checkbox">
+            				<?php
+								$radioData = array(
+            						'name'  => 'status',
+            						'type'	=> 'radio'
+            					);
+        						echo form_input(array_merge($radioData, ['value'=>'active']));	
+        						echo '<label for="Status"> Active</label>';
+        						echo form_input(array_merge($radioData, ['value'=>'inactive']));	
+        						echo '<label for="Status"> Inactive</label>';
+            				?>
+            			</div>
+            		</div>
+            <?php
+            	}
+            ?>
             <div class="form-group">
                 <?php echo form_submit(['name'=>'Add','value'=>'Submit','class'=>'btn btn-success btn-lg btn-block']);?>
             </div>

@@ -47,7 +47,7 @@ class Users extends CI_Model{
 	/**
     *   GET PRODUCT DATA
     */
-    public function active_users_attached_productsDetails($user_id='', $product_id='')
+    public function active_users_attached_productsDetails($user_id='', $product_id='', $userRole)
 	{
 		$this->db->select("user_products.product_price, user_products.quantity, user_products.id as user_product_id, products.*"); 
 		$this->db->from('user_products');
@@ -57,7 +57,9 @@ class Users extends CI_Model{
 		$this->db->where('users.verified', 1);
 		$this->db->where('products.status', 1);
 		$this->db->where('products.id', $product_id);
-		$this->db->where('user_products.user_id', $user_id);
+		if ($userRole != 1) {
+			$this->db->where('user_products.user_id', $user_id);
+		}
 		return $this->db->get()->result();	
 	}
 
